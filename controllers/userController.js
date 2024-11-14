@@ -17,8 +17,11 @@ exports.getAll = (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
+  const query = {
+    $or: [{ username: req.params.userId }, { email: req.params.userId }],
+  };
   userModel
-    .findOne({ username: req.params.username })
+    .findOne(query)
     .then((data) => {
       if (!data) {
         return res.status(404).json({
@@ -42,13 +45,13 @@ exports.getUser = async (req, res) => {
 };
 
 exports.addUser = async (req, res) => {
-  const { username, password, email, fullName, birthDay } = req.body;
+  const { username, password, email, fullName, birthDate } = req.body;
   const user = new userModel({
     username,
     password,
     email,
     fullName,
-    birthDay,
+    birthDate,
   });
   return user
     .save()
@@ -76,7 +79,7 @@ exports.updateUser = (req, res) => {
     email,
     phone,
     address,
-    birthDay,
+    birthDate,
     job,
     description,
   } = req.body;
@@ -86,7 +89,7 @@ exports.updateUser = (req, res) => {
   if (email) data["email"] = email;
   if (phone) data["phone"] = phone;
   if (address) data["address"] = address;
-  if (birthDay) data["birthDay"] = birthDay;
+  if (birthDate) data["birthDate"] = birthDate;
   if (job) data["job"] = job;
   if (description) data["description"] = description;
 

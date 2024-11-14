@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
+    default: "/default_avatar.png",
   },
   fullName: {
     type: String,
@@ -23,7 +24,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  birthDay: {
+  birthDate: {
     type: String,
   },
   job: {
