@@ -1,12 +1,12 @@
-const userModel = require("../models/userModel");
+const projectModel = require("../models/projectModel");
 
 exports.getAll = (req, res) => {
-  userModel
+  projectModel
     .find()
     .then((data) => {
       res.status(200).json({
         success: true,
-        dataUsers: data,
+        dataProjects: data,
       });
     })
     .catch((err) =>
@@ -16,22 +16,19 @@ exports.getAll = (req, res) => {
     );
 };
 
-exports.getUser = async (req, res) => {
-  const query = {
-    $or: [{ username: req.params.userId }, { email: req.params.userId }],
-  };
-  userModel
-    .findOne(query)
+exports.getProject = async (req, res) => {
+  projectModel
+    .findById(req.params.projectId)
     .then((data) => {
       if (!data) {
         return res.status(404).json({
           success: false,
-          message: "User not found",
+          message: "Project not found",
         });
       }
       return res.status(200).json({
         success: true,
-        dataUser: data,
+        dataProjects: data,
       });
     })
     .catch((error) => {
@@ -44,21 +41,24 @@ exports.getUser = async (req, res) => {
     });
 };
 
-exports.addUser = async (req, res) => {
-  const { username, password, email, fullName, birthDate } = req.body;
-  const user = new userModel({
-    username,
-    password,
-    email,
-    fullName,
-    birthDate,
+exports.addProject = async (req, res) => {
+  const { title, author, images, supporters, target, description, tagId } =
+    req.body;
+  const project = new projectModel({
+    title,
+    author,
+    images,
+    supporters,
+    target,
+    description,
+    tagId,
   });
-  return user
+  return project
     .save()
     .then((data) => {
       return res.status(201).json({
         success: true,
-        message: "Created user successfully",
+        message: "Created project successfully",
         data: data,
       });
     })
@@ -72,33 +72,33 @@ exports.addUser = async (req, res) => {
     });
 };
 
-exports.updateUser = (req, res) => {
+exports.updateProject = (req, res) => {
   const {
-    avatar,
-    fullName,
-    email,
-    phone,
-    address,
-    birthDate,
-    job,
+    title,
+    author,
+    images,
+    supporters,
+    target,
     description,
+    tagId,
+    status,
   } = req.body;
   const data = {};
-  if (avatar) data["avatar"] = avatar;
-  if (fullName) data["fullName"] = fullName;
-  if (email) data["email"] = email;
-  if (phone) data["phone"] = phone;
-  if (address) data["address"] = address;
-  if (birthDate) data["birthDate"] = birthDate;
-  if (job) data["job"] = job;
+  if (title) data["title"] = title;
+  if (author) data["author"] = author;
+  if (images) data["images"] = images;
+  if (supporters) data["supporters"] = supporters;
+  if (target) data["target"] = target;
   if (description) data["description"] = description;
+  if (tagId) data["tagId"] = tagId;
+  if (status) data["status"] = status;
 
-  userModel
-    .findOneAndUpdate({ username: req.params.id }, data)
+  projectModel
+    .findByIdAndUpdate(req.params.projectId, data)
     .then(() => {
       return res.status(200).json({
         success: true,
-        message: "Update user successfully",
+        message: "Update project successfully",
       });
     })
     .catch((error) => {
@@ -111,13 +111,13 @@ exports.updateUser = (req, res) => {
     });
 };
 
-exports.deleteUser = (req, res) => {
-  userModel
-    .findByIdAndDelete(req.params.id, {})
+exports.deleteProject = (req, res) => {
+  projectModel
+    .findByIdAndDelete(req.params.projectId, {})
     .then(() => {
       return res.status(204).json({
         success: true,
-        message: "Delete user successfully",
+        message: "Delete project successfully",
       });
     })
     .catch((error) => {

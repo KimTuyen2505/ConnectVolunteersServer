@@ -1,12 +1,12 @@
-const userModel = require("../models/userModel");
+const tagModel = require("../models/tagModel");
 
 exports.getAll = (req, res) => {
-  userModel
+  tagModel
     .find()
     .then((data) => {
       res.status(200).json({
         success: true,
-        dataUsers: data,
+        dataTags: data,
       });
     })
     .catch((err) =>
@@ -16,22 +16,19 @@ exports.getAll = (req, res) => {
     );
 };
 
-exports.getUser = async (req, res) => {
-  const query = {
-    $or: [{ username: req.params.userId }, { email: req.params.userId }],
-  };
-  userModel
-    .findOne(query)
+exports.getTag = async (req, res) => {
+  tagModel
+    .findById(req.params.tagId)
     .then((data) => {
       if (!data) {
         return res.status(404).json({
           success: false,
-          message: "User not found",
+          message: "Tag not found",
         });
       }
       return res.status(200).json({
         success: true,
-        dataUser: data,
+        dataTags: data,
       });
     })
     .catch((error) => {
@@ -44,21 +41,17 @@ exports.getUser = async (req, res) => {
     });
 };
 
-exports.addUser = async (req, res) => {
-  const { username, password, email, fullName, birthDate } = req.body;
-  const user = new userModel({
-    username,
-    password,
-    email,
-    fullName,
-    birthDate,
+exports.addTag = async (req, res) => {
+  const { tagName } = req.body;
+  const tag = new tagModel({
+    tagName: tagName,
   });
-  return user
+  return tag
     .save()
     .then((data) => {
       return res.status(201).json({
         success: true,
-        message: "Created user successfully",
+        message: "Created tag successfully",
         data: data,
       });
     })
@@ -72,33 +65,17 @@ exports.addUser = async (req, res) => {
     });
 };
 
-exports.updateUser = (req, res) => {
-  const {
-    avatar,
-    fullName,
-    email,
-    phone,
-    address,
-    birthDate,
-    job,
-    description,
-  } = req.body;
+exports.updateTag = (req, res) => {
+  const { tagName } = req.body;
   const data = {};
-  if (avatar) data["avatar"] = avatar;
-  if (fullName) data["fullName"] = fullName;
-  if (email) data["email"] = email;
-  if (phone) data["phone"] = phone;
-  if (address) data["address"] = address;
-  if (birthDate) data["birthDate"] = birthDate;
-  if (job) data["job"] = job;
-  if (description) data["description"] = description;
+  if (tagName) data["tagName"] = tagName;
 
-  userModel
-    .findOneAndUpdate({ username: req.params.id }, data)
+  tagModel
+    .findByIdAndUpdate(req.params.tagId, data)
     .then(() => {
       return res.status(200).json({
         success: true,
-        message: "Update user successfully",
+        message: "Update tag successfully",
       });
     })
     .catch((error) => {
@@ -111,13 +88,13 @@ exports.updateUser = (req, res) => {
     });
 };
 
-exports.deleteUser = (req, res) => {
-  userModel
-    .findByIdAndDelete(req.params.id, {})
+exports.deleteTag = (req, res) => {
+  tagModel
+    .findByIdAndDelete(req.params.tagId, {})
     .then(() => {
       return res.status(204).json({
         success: true,
-        message: "Delete user successfully",
+        message: "Delete tag successfully",
       });
     })
     .catch((error) => {
