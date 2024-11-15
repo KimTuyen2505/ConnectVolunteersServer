@@ -113,9 +113,9 @@ exports.updateUser = (req, res) => {
 
 exports.deleteUser = (req, res) => {
   userModel
-    .findByIdAndDelete(req.params.id, {})
+    .findOneAndDelete({ username: req.params.id }, {})
     .then(() => {
-      return res.status(204).json({
+      return res.status(200).json({
         success: true,
         message: "Delete user successfully",
       });

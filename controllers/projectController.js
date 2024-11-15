@@ -115,7 +115,7 @@ exports.deleteProject = (req, res) => {
   projectModel
     .findByIdAndDelete(req.params.projectId, {})
     .then(() => {
-      return res.status(204).json({
+      return res.status(200).json({
         success: true,
         message: "Delete project successfully",
       });
