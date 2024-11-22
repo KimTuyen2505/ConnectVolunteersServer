@@ -42,8 +42,17 @@ exports.getProject = async (req, res) => {
 };
 
 exports.addProject = async (req, res) => {
-  const { title, author, images, supporters, target, description, tagId } =
-    req.body;
+  const {
+    title,
+    author,
+    images,
+    supporters,
+    target,
+    description,
+    tagId,
+    startAt,
+    endAt,
+  } = req.body;
   const project = new projectModel({
     title,
     author,
@@ -52,6 +61,8 @@ exports.addProject = async (req, res) => {
     target,
     description,
     tagId,
+    startAt,
+    endAt,
   });
   return project
     .save()
@@ -82,6 +93,8 @@ exports.updateProject = (req, res) => {
     description,
     tagId,
     status,
+    startAt,
+    endAt,
   } = req.body;
   const data = {};
   if (title) data["title"] = title;
@@ -92,6 +105,8 @@ exports.updateProject = (req, res) => {
   if (description) data["description"] = description;
   if (tagId) data["tagId"] = tagId;
   if (status) data["status"] = status;
+  if (startAt) data["startAt"] = startAt;
+  if (endAt) data["endAt"] = endAt;
 
   projectModel
     .findByIdAndUpdate(req.params.projectId, data)

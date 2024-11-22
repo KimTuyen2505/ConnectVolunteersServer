@@ -29,7 +29,13 @@ const projectSchema = new mongoose.Schema({
   },
   status: {
     type: String, // "inApproval", inProgress", "finished"
-    default: "inApproval",
+    default: "inProgress",
+  },
+  startAt: {
+    type: String,
+  },
+  endAt: {
+    type: String,
   },
 });
 module.exports = mongoose.model("project", projectSchema);
