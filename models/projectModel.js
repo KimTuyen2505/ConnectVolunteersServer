@@ -18,6 +18,9 @@ const projectSchema = new mongoose.Schema({
       },
     ],
   },
+  supportersCount: {
+    type: Number,
+  },
   target: {
     type: Number,
   },

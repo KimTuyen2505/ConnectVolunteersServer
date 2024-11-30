@@ -47,6 +47,7 @@ exports.addProject = async (req, res) => {
     author,
     images,
     supporters,
+    supportersCount,
     target,
     description,
     tagId,
@@ -58,6 +59,7 @@ exports.addProject = async (req, res) => {
     author,
     images,
     supporters,
+    supportersCount,
     target,
     description,
     tagId,
@@ -89,6 +91,7 @@ exports.updateProject = (req, res) => {
     author,
     images,
     supporters,
+    supportersCount,
     target,
     description,
     tagId,
@@ -101,6 +104,7 @@ exports.updateProject = (req, res) => {
   if (author) data["author"] = author;
   if (images) data["images"] = images;
   if (supporters) data["supporters"] = supporters;
+  if (supportersCount) data["supportersCount"] = supportersCount;
   if (target) data["target"] = target;
   if (description) data["description"] = description;
   if (tagId) data["tagId"] = tagId;
