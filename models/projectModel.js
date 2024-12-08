@@ -21,6 +21,15 @@ const projectSchema = new mongoose.Schema({
   supportersCount: {
     type: Number,
   },
+  registers: {
+    type: [
+      {
+        username: String,
+        reason: String,
+      },
+    ],
+    default: [],
+  },
   target: {
     type: Number,
   },
@@ -30,8 +39,11 @@ const projectSchema = new mongoose.Schema({
   tagId: {
     type: String,
   },
+  location: {
+    type: String,
+  },
   status: {
-    type: String, // "inApproval", inProgress", "finished"
+    type: String, // "inProgress", "finished"
     default: "inProgress",
   },
   startAt: {

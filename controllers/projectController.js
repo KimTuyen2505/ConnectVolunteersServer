@@ -50,6 +50,7 @@ exports.addProject = async (req, res) => {
     supportersCount,
     target,
     description,
+    location,
     tagId,
     startAt,
     endAt,
@@ -62,6 +63,7 @@ exports.addProject = async (req, res) => {
     supportersCount,
     target,
     description,
+    location,
     tagId,
     startAt,
     endAt,
@@ -92,8 +94,10 @@ exports.updateProject = (req, res) => {
     images,
     supporters,
     supportersCount,
+    registers,
     target,
     description,
+    location,
     tagId,
     status,
     startAt,
@@ -105,9 +109,11 @@ exports.updateProject = (req, res) => {
   if (images) data["images"] = images;
   if (supporters) data["supporters"] = supporters;
   if (supportersCount) data["supportersCount"] = supportersCount;
+  if (registers) data["registers"] = registers;
   if (target) data["target"] = target;
   if (description) data["description"] = description;
   if (tagId) data["tagId"] = tagId;
+  if (location) data["location"] = location;
   if (status) data["status"] = status;
   if (startAt) data["startAt"] = startAt;
   if (endAt) data["endAt"] = endAt;

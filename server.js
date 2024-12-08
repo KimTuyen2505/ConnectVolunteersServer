@@ -21,14 +21,6 @@ app.use(verify);
 app.use(project);
 app.use(tag);
 app.use(vnpay);
-app.get('/api/charity-projects', async (req, res) => {
-  try {
-    const projects = await CharityProject.find();
-    res.json(projects);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
